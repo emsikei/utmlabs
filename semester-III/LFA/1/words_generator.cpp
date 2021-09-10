@@ -29,7 +29,7 @@ void WordsGenerator::parseRules(const std::vector<std::string> &rules)
     }
 }
 
-std::unordered_set<std::string> WordsGenerator::generateString(int numberOfWords)
+std::unordered_set<std::string> WordsGenerator::generateStrings(int numberOfWords)
 {
     parseRules(rules);
     // To be sure that we get random values every time we start the program

@@ -4,6 +4,15 @@
 
 #include "words_generator.hpp"
 
+void print(const std::unordered_set<std::string> &set)
+{
+    for (const auto &element : set)
+    {
+        std::cout << element << std::endl;
+    }
+    std::cout << std::endl;
+}
+
 int main()
 {
     std::vector<std::string> rules;
@@ -16,7 +25,8 @@ int main()
     rules.push_back("BcS");
 
     WordsGenerator generator(rules);
-    std::unordered_set<std::string> result = generator.generateString(5);
+    std::unordered_set<std::string> result = generator.generateStrings(15);
     generator.printRules();
+    std::cout << "\n";
+    print(result);
 }
-

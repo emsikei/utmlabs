@@ -9,7 +9,7 @@ class WordsGenerator
 public:
     WordsGenerator(std::vector<std::string> _rules) : rules(_rules) {}
     void printRules();
-    std::unordered_set<std::string> generateString(int numberOfWords);
+    std::unordered_set<std::string> generateStrings(int numberOfWords);
 
 private:
     void parseRules(const std::vector<std::string> &rules);

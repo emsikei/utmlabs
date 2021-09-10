@@ -35,7 +35,7 @@ std::unordered_set<std::string> WordsGenerator::generateString(int numberOfWords
     // To be sure that we get random values every time we start the program
     std::srand(std::time(nullptr));
 
-    // Container of unique generated words
+    // Container for unique generated words
     std::unordered_set<std::string> generatedStrings;
 
     while (generatedStrings.size() < numberOfWords)

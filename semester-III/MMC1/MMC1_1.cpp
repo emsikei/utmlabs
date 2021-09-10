@@ -11,7 +11,7 @@
 //* f(x) = 4*pow(x, 3) - 6 * pow(x, 2) - 6 * x
 
 double func(double x);
-double chordeMethod(int &a, int &b, double E);
+double chordeMethod(double a, double b, double E);
 
 int main()
 {
@@ -20,49 +20,34 @@ int main()
     double E = 0.01;
     double x = 0.0;
 
-    if (func(a) * func(b) > 0)
-    {
-        std::cout << "Wrong Interval!";
-        return 0;
-    }
-
     x = chordeMethod(a, b, E);
 
     std::cout << x << "\n";
 }
 
-double func(double x)
+double f(double x)
 {
     return 4 * pow(x, 3) - 6 * pow(x, 2) - 6 * x;
 }
 
-double chordeMethod(int &a, int &b, double E)
+double chordeMethod(double a, double b, double E)
 {
-    // int x;
-    // while (abs(func(b) - func(a)) > E)
-    // {
-    //     x = (func(b) * a - func(a) * b) / (func(b) - func(a));
-    //     if ((func(a) * func(x)) > 0)
-    //     {
-    //         a = x;
-    //     }
-    //     else
-    //     {
-    //         b = x;
-    //     }
-    // }
-    // return x;
-
-    double x;
-    int N = 0;
-    while (abs(func(b) - func(a)) > E)
+    double t;
+    while (fabs(b - a) >= E)
     {
-        x = (func(b) * a - func(a) * b) / (func(b) - func(a));
-        if ((func(a) * func(x)) > 0)
-            a = x;
+        t = a + (f(b) * (b - a)) / (f(b) - f(a));
+        if (f(a) * f(t) < 0)
+        {
+            b = t;
+            std::cout << "b = " << b << "\n";
+        }
+        else if (f(t) * f(b) < 0)
+        {
+            a = t;
+            std::cout << "a = " << a << "\n";
+        }
         else
-            b = x;
-        N++;
+            return t;
     }
-    return x;
+    return t;
 }

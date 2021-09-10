@@ -11,6 +11,7 @@ public:
     void print();
 
 private:
+    int idx{0};
     unsigned int _size{0};
     int * _list;
 };
@@ -70,16 +71,9 @@ int Vector::pop() {
 }
 
 void Vector::push(int val) {
-    int * tmpArr = new int[_size + 1];
-    for (int i = 0; i < _size; ++i) {
-        tmpArr[i] = _list[i];
-    }
-    tmpArr[_size] = val;
-
-    delete [] _list;
-    _list = tmpArr;
-
-    this->_size++;
+    _list[idx] = val;
+    ++idx;
+    // this->_size++;
 }
 
 void Vector::print() {

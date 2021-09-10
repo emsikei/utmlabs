@@ -17,5 +17,6 @@ int main()
 
     WordsGenerator generator(rules);
     std::unordered_set<std::string> result = generator.generateString(5);
+    generator.printRules();
 }
 

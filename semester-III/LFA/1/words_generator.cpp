@@ -67,7 +67,6 @@ std::unordered_set<std::string> WordsGenerator::generateString(int numberOfWords
             {
                 if (!generatedStrings.count(str))
                 {
-                    std::cout << str << "\n";
                     generatedStrings.insert(str);
                 }
                 break;

@@ -25,7 +25,7 @@ int main()
     rules.push_back("BcS");
 
     WordsGenerator generator(rules);
-    std::unordered_set<std::string> result = generator.generateStrings(15);
+    std::unordered_set<std::string> result = generator.generateStrings(15, 5);
     generator.printRules();
     std::cout << "\n";
     print(result);

@@ -14,12 +14,10 @@ public:
 private:
     void parseRules(const std::vector<std::string> &rules);
     void fillLetterSets(const std::vector<std::string> &rules, std::vector<char> &Vn, std::vector<char> &Vt);
-
     void checkForDublicates(std::vector<char> &vec, char key);
 
     std::vector<std::string> rules;
     std::unordered_map<char, std::vector<int>> parsedRules;
-
     std::vector<char> Vn;
     std::vector<char> Vt;
 };

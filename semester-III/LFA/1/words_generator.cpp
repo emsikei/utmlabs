@@ -32,6 +32,9 @@ void WordsGenerator::parseRules(const std::vector<std::string> &rules)
 std::unordered_set<std::string> WordsGenerator::generateStrings(int numberOfWords)
 {
     parseRules(rules);
+
+    const size_t MIN_LENGTH = Vn.size() + 2;
+
     // To be sure that we get random values every time we start the program
     std::srand(std::time(nullptr));
 
@@ -65,7 +68,7 @@ std::unordered_set<std::string> WordsGenerator::generateStrings(int numberOfWord
             // P.S the if statement is placed before randomRule calculation in that case if our words consist of only 1 letter
             if (rules[randomRule][2] == char(0))
             {
-                if (!generatedStrings.count(str))
+                if (!generatedStrings.count(str) && str.length() >= MIN_LENGTH)
                 {
                     generatedStrings.insert(str);
                 }

@@ -62,7 +62,7 @@ std::unordered_set<std::string> WordsGenerator::generateStrings(int numberOfWord
             tmp = parsedRules[start];
 
             // If rules has no nominal symbol - break and add the word to the result
-            // P.S the if statement is placed before randomRule calculation in that case if our words consists of only 1 letter
+            // P.S the if statement is placed before randomRule calculation in that case if our words consist of only 1 letter
             if (rules[randomRule][2] == char(0))
             {
                 if (!generatedStrings.count(str))

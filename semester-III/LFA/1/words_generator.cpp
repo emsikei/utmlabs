@@ -30,7 +30,10 @@ void WordsGenerator::parseRules(const std::vector<std::string> &rules)
 }
 
 std::unordered_set<std::string> WordsGenerator::generateStrings(int numberOfWords, int minLength)
-{
+{   
+    // Get e.g a map  "S": {0}
+    //                "A": {1, 2}
+    //                "B": {3, 4, 5}
     parseRules(rules);
 
     // To be sure that we get random values every time we start the program
@@ -53,17 +56,13 @@ std::unordered_set<std::string> WordsGenerator::generateStrings(int numberOfWord
 
         // Get random rule from initial list
         int randomRule = tmp[rand() % tmp.size()];
+
+        // Add terminal symbol to resulting string (e.g S -> aA - str += "a")
         str += rules[randomRule][1];
 
         while (true)
         {
-            // Reassign start to the nominal letter in the rule (e.g. S -> aA - start = A)
-            start = rules[randomRule][2];
-
-            tmp = parsedRules[start];
-
             // If rules has no nominal symbol - break and add the word to the result
-            // P.S the if statement is placed before randomRule calculation in that case if our words consist of only 1 letter
             if (rules[randomRule][2] == char(0))
             {
                 if (!generatedStrings.count(str) && str.length() >= minLength)
@@ -72,6 +71,11 @@ std::unordered_set<std::string> WordsGenerator::generateStrings(int numberOfWord
                 }
                 break;
             }
+
+            // Reassign start to the nominal letter in the rule (e.g. S -> aA - start = A)
+            start = rules[randomRule][2];
+
+            tmp = parsedRules[start];
 
             randomRule = tmp[rand() % tmp.size()];
 

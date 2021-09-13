@@ -4,34 +4,34 @@
 class Vector
 {
     unsigned int _size;
-    int *_list;
     // _list; реализация списка целых чисел
+    int *_list;
 public:
     Vector() // default ctor
     {
+        // реализация здесь
         std::cout << "default ctor ";
         _list = nullptr;
         _size = 0;
-        // реализация здесь
     }
     ~Vector() // dtor
     {
+        // реализация здесь
         std::cout << "dtor ";
         delete[] _list;
         _list = nullptr;
         _size = 0;
-        // реализация здесь
     }
 
     Vector(const unsigned int size, const int val = 0) // parametric ctor
     {
         std::cout << "param ctor ";
         // реализация здесь
-        _size = size;
-        _list = new int[size]{val};
+        this->_size = size;
+        this->_list = new int[size]{val};
         for (int i = 0; i < size; ++i)
         {
-            _list[i] = val;
+            this->_list[i] = val;
         }
     }
 
@@ -43,9 +43,8 @@ public:
 
         for (int i = 0; i < _size; ++i)
         {
-            _list[i] = other._list[i];
+            this->_list[i] = other._list[i];
         }
-        // this->_list = other._list;
     }
 
     Vector(Vector &&other) noexcept // move ctor
@@ -62,11 +61,6 @@ public:
         other._size = 0;
         delete [] other._list;
         other._list = nullptr;
-        // for (int i = 0; i < other._size; ++i)
-        // {
-        //     other._list[i] = 0;
-        // }
-        // other.~Vector();
     }
 
     friend std::ostream &
@@ -114,9 +108,7 @@ int main(int argc, char const *argv[])
 //* Expected: default ctor  param ctor 0 0 0 0 0  move ctor 0 0 0 0 0   param ctor 7 7 7 7  copy ctor 7 7 7 7 dtor dtor dtor dtor dtor 
 
 // 6 6 6
-//! default ctor  param ctor 0 0 0 0 0 0  move ctor dtor 0 0 0 0 0 0   param ctor 6 6 6 6 6 6  Output: copy ctor 6 6 6 6 6 6 dtor dtor dtor dtor dtor
 //* Expected:  default ctor  param ctor 0 0 0 0 0 0  move ctor 0 0 0 0 0 0   param ctor 6 6 6 6 6 6  copy ctor 6 6 6 6 6 6 dtor dtor dtor dtor dtor
 
 // 3 4 99
-//! Output: default ctor  param ctor 0 0 0  move ctor dtor 0 0 0   param ctor 99 99 99 99  copy ctor 99 99 99 99 dtor dtor dtor dtor dtor
 //* Expected: default ctor  param ctor 0 0 0  move ctor 0 0 0   param ctor 99 99 99 99  copy ctor 99 99 99 99 dtor dtor dtor dtor dtor

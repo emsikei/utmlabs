@@ -21,6 +21,7 @@ void WordsGenerator::parseRules(const std::vector<std::string> &rules)
     {
         for (auto &p : parsedRules)
         {
+            // if the key in the map equals to the nominal symbol in the  rule than add rule's index to the key's value
             if (p.first == rules[i][0])
             {
                 p.second.push_back(i);

@@ -1,47 +1,66 @@
 #include <iostream>
-#include <math.h>
-
-//* 1. Метод Ньютона
-//* 2. Метод хорд (1-ая формула)
-//* 3. Метод секущих
+#include <cmath>
 
 //? E = 0.1 * 10 ^ (-1)
 //? E = 0.1 * 10 ^ (-2)
 //? E = 0.1 * 10 ^ (-3)
-
-//! f(x) = 4x^3 - 6x^2 - 6x = 0
-// a = -2.5, b = 2.5
-
-//* f(x) = 4*pow(x, 3) - 6 * pow(x, 2) - 6 * x
 
 double func(double x);
 double funcDerivativeOne(double x);
 double funcDerivativeTwo(double x);
 
 double NewtonMethod(double a, double b, double E);
-double chordeMethod(double a, double b, double E);
+double hordeMethod(double a, double b, double E);
 double secantMethod(double a, double b, double E);
+
+void getResults(double a, double b, double x);
 
 int main()
 {
-    double a = -2.5;
-    double b = 2.5;
-    double E = 0.0001;
+    double a = 0.0;
+    double b = 0.0;
+
     double x = 0.0;
 
-    std::cout << "Chorde Method\t";
-
-    x = chordeMethod(a, b, E);
-
+    std::cout << "Enter interval [a, b]: ";
+    std::cin >> a >> b;
     std::cout << "\n";
 
-    std::cout << "Newton Method\t";
-    x = NewtonMethod(a, b, E);
+    while (true)
+    {
+        while (func(a) * func(b) > 0)
+        {
+            std::cout << "Wrong interval. Enter another one: ";
+            std::cin >> a >> b;
+            std::cout << "\n";
+        }
 
-    std::cout << "\n";
+        getResults(a, b, x);
 
-    std::cout << "Secant Method\t";
-    x = secantMethod(a, b, E);
+        char decision;
+        std::cout << "Do you want to continue? Y/N: ";
+        std::cin >> decision;
+        switch (decision)
+        {
+        case 'Y':
+        case 'y':
+            std::cout << "Enter interval [a, b]: ";
+            std::cin >> a >> b;
+            std::cout << "\n";
+
+            while (func(a) * func(b) > 0)
+            {
+                std::cout << "Wrong interval. Enter another one: ";
+                std::cin >> a >> b;
+                std::cout << "\n";
+            }
+            getResults(a, b, x);
+            break;
+        case 'N':
+        case 'n':
+            return 0;
+        }
+    }
 }
 
 double func(double x)
@@ -60,11 +79,11 @@ double funcDerivativeTwo(double x)
 
 double NewtonMethod(double a, double b, double E)
 {
-    if (func(a) * func(b) > 0)
-    {
-        std::cout << "Wrong Interval\n";
-        return 0;
-    }
+    // if (func(a) * func(b) > 0)
+    // {
+    //     std::cout << "Wrong Interval\n";
+    //     return 0;
+    // }
     double x_current = 0.0;
     double x_next = 0.0;
 
@@ -90,17 +109,18 @@ double NewtonMethod(double a, double b, double E)
     }
 
     std::cout << "x = " << x_next << ";\t"
-              << "f(x) = " << func(x_next) << ";\t " << k << " iterations";
+              << "f(x) = " << func(x_next) << ";\t "
+              << "Epsilon = " << E << ";\t" << k << " iterations";
     return x_next;
 }
 
-double chordeMethod(double a, double b, double E)
+double hordeMethod(double a, double b, double E)
 {
-    if (func(a) * func(b) > 0)
-    {
-        std::cout << "Wrong Interval\n";
-        return 0;
-    }
+    // if (func(a) * func(b) > 0)
+    // {
+    //     std::cout << "Wrong Interval\n";
+    //     return 0;
+    // }
 
     double x = 0.0;
     int k = 0;
@@ -121,18 +141,21 @@ double chordeMethod(double a, double b, double E)
     } while (fabs(func(x)) > E);
 
     std::cout << "x = " << x << ";\t"
-              << "f(x) = " << func(x) << ";\t " << k << " iterations";
+              << "f(x) = " << func(x) << ";\t "
+              << "Epsilon = "
+              << E << ";\t" << k << " iterations";
 
     return x;
 }
 
 double secantMethod(double a, double b, double E)
 {
-    if (func(a) * func(b) > 0)
-    {
-        std::cout << "Wrong Interval\n";
-        return 0;
-    }
+    // if (func(a) * func(b) > 0)
+    // {
+    //     std::cout << "Wrong Interval\n";
+    //     return 0;
+    // }
+
     double x_current = 0.0;
     double x_next = 0.0;
     double x_prev = 0.0;
@@ -162,6 +185,34 @@ double secantMethod(double a, double b, double E)
     }
 
     std::cout << "x = " << x_next << ";\t"
-              << "f(x) = " << func(x_next) << ";\t " << k << " iterations";
+              << "f(x) = " << func(x_next) << ";\t "
+              << "Epsilon = " << E << ";\t" << k << " iterations";
     return x_next;
+}
+
+void getResults(double a, double b, double x)
+{
+    int i = -1;
+    while (i >= -3)
+    {
+        double E = 0.1 * pow(10, i);
+
+        std::cout << "Horde Method\t";
+
+        x = hordeMethod(a, b, E);
+
+        std::cout << "\n";
+
+        std::cout << "Newton Method\t";
+        x = NewtonMethod(a, b, E);
+
+        std::cout << "\n";
+
+        std::cout << "Secant Method\t";
+        x = secantMethod(a, b, E);
+
+        std::cout << "\n\n";
+
+        i--;
+    }
 }

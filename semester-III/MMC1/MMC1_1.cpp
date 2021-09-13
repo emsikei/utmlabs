@@ -13,6 +13,7 @@ double NewtonMethod(double a, double b, double E);
 double hordeMethod(double a, double b, double E);
 double secantMethod(double a, double b, double E);
 
+void inputData(double &a, double &b);
 void getResults(double a, double b, double x);
 
 int main()
@@ -22,21 +23,11 @@ int main()
 
     double x = 0.0;
 
-    std::cout << "Enter interval [a, b]: ";
-    std::cin >> a >> b;
-    std::cout << "\n";
+    inputData(a, b);
+    getResults(a, b, x);
 
     while (true)
     {
-        while (func(a) * func(b) > 0)
-        {
-            std::cout << "Wrong interval. Enter another one: ";
-            std::cin >> a >> b;
-            std::cout << "\n";
-        }
-
-        getResults(a, b, x);
-
         char decision;
         std::cout << "Do you want to continue? Y/N: ";
         std::cin >> decision;
@@ -44,16 +35,7 @@ int main()
         {
         case 'Y':
         case 'y':
-            std::cout << "Enter interval [a, b]: ";
-            std::cin >> a >> b;
-            std::cout << "\n";
-
-            while (func(a) * func(b) > 0)
-            {
-                std::cout << "Wrong interval. Enter another one: ";
-                std::cin >> a >> b;
-                std::cout << "\n";
-            }
+            inputData(a, b);
             getResults(a, b, x);
             break;
         case 'N':
@@ -214,5 +196,19 @@ void getResults(double a, double b, double x)
         std::cout << "\n\n";
 
         i--;
+    }
+}
+
+void inputData(double &a, double &b)
+{
+    std::cout << "Enter interval [a, b]: ";
+    std::cin >> a >> b;
+    std::cout << "\n";
+
+    while (func(a) * func(b) > 0)
+    {
+        std::cout << "Wrong interval. Enter another one: ";
+        std::cin >> a >> b;
+        std::cout << "\n";
     }
 }

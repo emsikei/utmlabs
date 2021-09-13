@@ -20,22 +20,28 @@ double funcDerivativeTwo(double x);
 
 double NewtonMethod(double a, double b, double E);
 double chordeMethod(double a, double b, double E);
-double sekushihMethod(double a, double b, double E);
+double secantMethod(double a, double b, double E);
 
 int main()
 {
     double a = -2.5;
     double b = 2.5;
-    double E = 0.01;
+    double E = 0.0001;
     double x = 0.0;
+
+    std::cout << "Chorde Method\t";
 
     x = chordeMethod(a, b, E);
 
     std::cout << "\n";
 
+    std::cout << "Newton Method\t";
     x = NewtonMethod(a, b, E);
 
-    // std::cout << x << "\n";
+    std::cout << "\n";
+
+    std::cout << "Secant Method\t";
+    x = secantMethod(a, b, E);
 }
 
 double func(double x)
@@ -74,6 +80,7 @@ double NewtonMethod(double a, double b, double E)
     }
 
     x_next = x_current - (func(x_current) / funcDerivativeOne(x_current));
+    k++;
 
     while (fabs(x_next - x_current) > E)
     {
@@ -96,15 +103,11 @@ double chordeMethod(double a, double b, double E)
     }
 
     double x = 0.0;
-
-    x = a - ((b - a) * func(a)) / (func(b) - func(a));
-
     int k = 0;
 
-    std::cout << func(x) << "\n";
-
-    while (func(x) > E)
+    do
     {
+        x = a - ((b - a) * func(a)) / (func(b) - func(a));
         if (func(a) * func(b) < 0)
         {
             b = x;
@@ -115,30 +118,50 @@ double chordeMethod(double a, double b, double E)
             a = x;
             k++;
         }
-        x = a - ((b - a) * func(a)) / (func(b) - func(a));
-    }
+    } while (fabs(func(x)) > E);
 
     std::cout << "x = " << x << ";\t"
               << "f(x) = " << func(x) << ";\t " << k << " iterations";
 
     return x;
+}
 
-    // double t;
-    // while (fabs(b - a) >= E)
-    // {
-    //     t = a + (func(b) * (b - a)) / (func(b) - func(a));
-    //     if (func(a) * func(t) < 0)
-    //     {
-    //         b = t;
-    //         std::cout << "b = " << b << "\n";
-    //     }
-    //     else if (func(t) * func(b) < 0)
-    //     {
-    //         a = t;
-    //         std::cout << "a = " << a << "\n";
-    //     }
-    //     else
-    //         return t;
-    // }
-    // return t;
+double secantMethod(double a, double b, double E)
+{
+    if (func(a) * func(b) > 0)
+    {
+        std::cout << "Wrong Interval\n";
+        return 0;
+    }
+    double x_current = 0.0;
+    double x_next = 0.0;
+    double x_prev = 0.0;
+
+    int k = 0;
+
+    if (func(x_current) * funcDerivativeTwo(x_current) > 0)
+    {
+        x_prev = a;
+        x_current = a + E;
+    }
+    else
+    {
+        x_prev = b;
+        x_current = a - E;
+    }
+
+    x_next = x_current - (func(x_current) * (x_current - x_prev)) / (func(x_current) - func(x_prev));
+    k++;
+
+    while (fabs(x_next - x_current) > E)
+    {
+        x_prev = x_current;
+        x_current = x_next;
+        x_next = x_current - (func(x_current) * (x_current - x_prev)) / (func(x_current) - func(x_prev));
+        k++;
+    }
+
+    std::cout << "x = " << x_next << ";\t"
+              << "f(x) = " << func(x_next) << ";\t " << k << " iterations";
+    return x_next;
 }

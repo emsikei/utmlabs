@@ -8,30 +8,8 @@
 
 #include "words_generator.hpp"
 
-void WordsGenerator::parseRules(const std::vector<std::string> &rules)
-{
-    fillLetterSets(rules, Vn, Vt);
-
-    for (size_t i = 0; i < Vn.size(); ++i)
-    {
-        parsedRules.emplace(Vn[i], std::vector<int>());
-    }
-
-    for (size_t i = 0; i < rules.size(); ++i)
-    {
-        for (auto &p : parsedRules)
-        {
-            // if the key in the map equals to the nominal symbol in the  rule than add rule's index to the key's value
-            if (p.first == rules[i][0])
-            {
-                p.second.push_back(i);
-            }
-        }
-    }
-}
-
 std::unordered_set<std::string> WordsGenerator::generateStrings(int numberOfWords, int minLength)
-{   
+{
     // Get e.g a map  "S": {0}
     //                "A": {1, 2}
     //                "B": {3, 4, 5}
@@ -84,6 +62,28 @@ std::unordered_set<std::string> WordsGenerator::generateStrings(int numberOfWord
         }
     }
     return generatedStrings;
+}
+
+void WordsGenerator::parseRules(const std::vector<std::string> &rules)
+{
+    fillLetterSets(rules, Vn, Vt);
+
+    for (size_t i = 0; i < Vn.size(); ++i)
+    {
+        parsedRules.emplace(Vn[i], std::vector<int>());
+    }
+
+    for (size_t i = 0; i < rules.size(); ++i)
+    {
+        for (auto &p : parsedRules)
+        {
+            // if the key in the map equals to the nominal symbol in the  rule than add rule's index to the key's value
+            if (p.first == rules[i][0])
+            {
+                p.second.push_back(i);
+            }
+        }
+    }
 }
 
 void WordsGenerator::printRules()

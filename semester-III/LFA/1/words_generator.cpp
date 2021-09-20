@@ -41,7 +41,7 @@ std::unordered_set<std::string> WordsGenerator::generateStrings(int numberOfWord
 
         while (true)
         {
-            // If rules has no nominal symbol - break and add the word to the result
+            // If rules has no nonterminal symbol - break and add the word to the result
             if (rules[randomRule][2] == char(0))
             {
                 if (!generatedStrings.count(str) && str.length() >= minLength)
@@ -51,7 +51,7 @@ std::unordered_set<std::string> WordsGenerator::generateStrings(int numberOfWord
                 break;
             }
 
-            // Reassign start to the nominal letter in the rule (e.g. S -> aA - start = A)
+            // Reassign start to the nonterminal letter in the rule (e.g. S -> aA - start = A)
             start = rules[randomRule][2];
 
             tmp = parsedRules[start];
@@ -77,7 +77,7 @@ void WordsGenerator::parseRules(const std::vector<std::string> &rules)
     {
         for (auto &p : parsedRules)
         {
-            // if the key in the map equals to the nominal symbol in the  rule than add rule's index to the key's value
+            // if the key in the map equals to the nonterminal symbol in the  rule than add rule's index to the key's value
             if (p.first == rules[i][0])
             {
                 p.second.push_back(i);
@@ -117,9 +117,9 @@ void WordsGenerator::fillLetterSets(const std::vector<std::string> &rules, std::
 {
     for (size_t i = 0; i < rules.size(); ++i)
     {
-        char nominalLetter = rules[i][0];
+        char nonterminalLetter = rules[i][0];
         char terminalLetter = rules[i][1];
-        checkForDublicates(Vn, nominalLetter);
+        checkForDublicates(Vn, nonterminalLetter);
         checkForDublicates(Vt, terminalLetter);
     }
 }

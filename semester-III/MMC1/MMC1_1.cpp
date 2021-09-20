@@ -1,17 +1,17 @@
 #include <iostream>
 #include <cmath>
 
-//? E = 0.1 * 10 ^ (-1)
-//? E = 0.1 * 10 ^ (-2)
-//? E = 0.1 * 10 ^ (-3)
+//? Eps = 0.1 * 10 ^ (-1)
+//? Eps = 0.1 * 10 ^ (-2)
+//? Eps = 0.1 * 10 ^ (-3)
 
 double func(double x);
 double funcDerivativeOne(double x);
 double funcDerivativeTwo(double x);
 
-double NewtonMethod(double a, double b, double E);
-double hordeMethod(double a, double b, double E);
-double secantMethod(double a, double b, double E);
+double NewtonMethod(double a, double b, double Eps);
+double hordeMethod(double a, double b, double Eps);
+double secantMethod(double a, double b, double Eps);
 
 void inputData(double &a, double &b);
 void getResults(double a, double b, double x);
@@ -59,7 +59,7 @@ double funcDerivativeTwo(double x)
     return 24 * x - 12;
 }
 
-double NewtonMethod(double a, double b, double E)
+double NewtonMethod(double a, double b, double Eps)
 {
     // if (func(a) * func(b) > 0)
     // {
@@ -83,7 +83,7 @@ double NewtonMethod(double a, double b, double E)
     x_next = x_current - (func(x_current) / funcDerivativeOne(x_current));
     k++;
 
-    while (fabs(x_next - x_current) > E)
+    while (fabs(x_next - x_current) > Eps)
     {
         x_current = x_next;
         x_next = x_current - (func(x_current) / funcDerivativeOne(x_current));
@@ -92,11 +92,11 @@ double NewtonMethod(double a, double b, double E)
 
     std::cout << "x = " << x_next << ";\t"
               << "f(x) = " << func(x_next) << ";\t "
-              << "Epsilon = " << E << ";\t" << k << " iterations";
+              << "Epsilon = " << Eps << ";\t" << k << " iterations";
     return x_next;
 }
 
-double hordeMethod(double a, double b, double E)
+double hordeMethod(double a, double b, double Eps)
 {
     // if (func(a) * func(b) > 0)
     // {
@@ -110,7 +110,7 @@ double hordeMethod(double a, double b, double E)
     do
     {
         x = a - ((b - a) * func(a)) / (func(b) - func(a));
-        if (func(a) * func(b) < 0)
+        if (func(a) * func(b) <= 0)
         {
             b = x;
             k++;
@@ -120,17 +120,17 @@ double hordeMethod(double a, double b, double E)
             a = x;
             k++;
         }
-    } while (fabs(func(x)) > E);
+    } while (fabs(func(x)) > Eps);
 
     std::cout << "x = " << x << ";\t"
               << "f(x) = " << func(x) << ";\t "
               << "Epsilon = "
-              << E << ";\t" << k << " iterations";
+              << Eps << ";\t" << k << " iterations";
 
     return x;
 }
 
-double secantMethod(double a, double b, double E)
+double secantMethod(double a, double b, double Eps)
 {
     // if (func(a) * func(b) > 0)
     // {
@@ -147,18 +147,18 @@ double secantMethod(double a, double b, double E)
     if (func(x_current) * funcDerivativeTwo(x_current) > 0)
     {
         x_prev = a;
-        x_current = a + E;
+        x_current = a + Eps;
     }
     else
     {
         x_prev = b;
-        x_current = a - E;
+        x_current = a - Eps;
     }
 
     x_next = x_current - (func(x_current) * (x_current - x_prev)) / (func(x_current) - func(x_prev));
     k++;
 
-    while (fabs(x_next - x_current) > E)
+    while (fabs(x_next - x_current) > Eps)
     {
         x_prev = x_current;
         x_current = x_next;
@@ -168,7 +168,7 @@ double secantMethod(double a, double b, double E)
 
     std::cout << "x = " << x_next << ";\t"
               << "f(x) = " << func(x_next) << ";\t "
-              << "Epsilon = " << E << ";\t" << k << " iterations";
+              << "Epsilon = " << Eps << ";\t" << k << " iterations";
     return x_next;
 }
 
@@ -177,21 +177,21 @@ void getResults(double a, double b, double x)
     int i = -1;
     while (i >= -3)
     {
-        double E = 0.1 * pow(10, i);
+        double Eps = 0.1 * pow(10, i);
 
         std::cout << "Horde Method\t";
 
-        x = hordeMethod(a, b, E);
+        x = hordeMethod(a, b, Eps);
 
         std::cout << "\n";
 
         std::cout << "Newton Method\t";
-        x = NewtonMethod(a, b, E);
+        x = NewtonMethod(a, b, Eps);
 
         std::cout << "\n";
 
         std::cout << "Secant Method\t";
-        x = secantMethod(a, b, E);
+        x = secantMethod(a, b, Eps);
 
         std::cout << "\n\n";
 

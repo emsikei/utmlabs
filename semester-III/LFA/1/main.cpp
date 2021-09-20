@@ -26,15 +26,6 @@ int main()
     rules.push_back("Bc");
     rules.push_back("BcS");
 
-    // rules.push_back("SaB");
-    // rules.push_back("SaC");
-    // rules.push_back("BaC");
-    // rules.push_back("CnC");
-    // rules.push_back("CfA");
-    // rules.push_back("AdA");
-    // rules.push_back("Cf");
-    // rules.push_back("Ad");
-
     WordsGenerator generator(rules);
     std::unordered_set<std::string> result = generator.generateStrings(15, 5);
     generator.printRules();

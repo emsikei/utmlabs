@@ -1,10 +1,6 @@
 #include <iostream>
 #include <cmath>
 
-//? Eps = 0.1 * 10 ^ (-1)
-//? Eps = 0.1 * 10 ^ (-2)
-//? Eps = 0.1 * 10 ^ (-3)
-
 double func(double x);
 double funcDerivativeOne(double x);
 double funcDerivativeTwo(double x);
@@ -71,7 +67,7 @@ double NewtonMethod(double a, double b, double Eps)
 
     int k = 0;
 
-    if (func(x_current) * funcDerivativeTwo(x_current) > 0)
+    if (func(a) * funcDerivativeTwo(a) > 0)
     {
         x_current = a;
     }
@@ -144,7 +140,7 @@ double secantMethod(double a, double b, double Eps)
 
     int k = 0;
 
-    if (func(x_current) * funcDerivativeTwo(x_current) > 0)
+    if (func(a) * funcDerivativeTwo(a) > 0)
     {
         x_prev = a;
         x_current = a + Eps;
@@ -152,7 +148,7 @@ double secantMethod(double a, double b, double Eps)
     else
     {
         x_prev = b;
-        x_current = a - Eps;
+        x_current = b - Eps;
     }
 
     x_next = x_current - (func(x_current) * (x_current - x_prev)) / (func(x_current) - func(x_prev));

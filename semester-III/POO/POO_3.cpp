@@ -71,7 +71,7 @@ public:
 
         this->_size = other._size;
         this->_list = new int[other._size];
-        for (int i = 0; i < _size; ++i)
+        for (int i = 0; i < this->_size; ++i)
         {
             this->_list[i] = other._list[i];
         }
@@ -118,6 +118,7 @@ public:
     Vector &operator+=(const Vector &rhs)
     {
         // реализация здесь
+        //todo
 
         Vector tmp;
         tmp._size = this->_size + rhs._size;
@@ -146,6 +147,7 @@ public:
     friend Vector operator+(Vector lhs, const Vector &rhs)
     {
         // реализация здесь
+        //todo
         Vector tmp;
         return tmp;
     }
@@ -153,12 +155,14 @@ public:
     Vector operator--(int)
     {
         // реализация здесь
+        //todo
         return;
     }
 
     friend std::istream &operator>>(std::istream &is, Vector &obj)
     {
         // реализация здесь
+        //todo
         return is;
     }
 
